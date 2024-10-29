@@ -1,9 +1,10 @@
+# utils.py
 import logging
 from datetime import datetime
 from config import CONFIG
 from colorama import Fore, Style, init
 
-init()  # Initialize colorama
+init()
 
 # Setup logging
 logging.basicConfig(
@@ -22,6 +23,17 @@ def format_message(msg):
     }.get(msg.type, Fore.WHITE)
 
     return f"{color}[{msg.timestamp}] {msg.sender}: {msg.content}{Style.RESET_ALL}"
+
+def print_colored(message, color):
+    """Print colored message"""
+    colors = {
+        'red': Fore.RED,
+        'green': Fore.GREEN,
+        'blue': Fore.BLUE,
+        'yellow': Fore.YELLOW,
+        'white': Fore.WHITE
+    }
+    print(f"{colors.get(color, Fore.WHITE)}{message}{Style.RESET_ALL}")
 
 def log_message(message, level='info'):
     """Log message to file"""

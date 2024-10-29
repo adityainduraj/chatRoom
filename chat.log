@@ -1,3 +1,7 @@
 2024-10-28 23:14:55,889 - INFO - Server started successfully
 2024-10-29 00:28:07,544 - INFO - Server started successfully
 2024-10-29 00:30:04,733 - ERROR - Error handling message: [Errno 104] Connection reset by peer
+2024-10-29 20:59:14,605 - INFO - Server started successfully
+2024-10-29 21:05:54,925 - INFO - Server started successfully
+2024-10-29 21:06:28,287 - INFO - Client connected: aditya from ('127.0.0.1', 51716)
+2024-10-29 21:06:32,391 - INFO - Client disconnected: aditya
