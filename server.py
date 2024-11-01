@@ -2,39 +2,88 @@
 import socket
 import threading
 import json
-from config import CONFIG, get_local_ip
+from config import CONFIG, get_local_ip, find_available_port
 from models import Client, Message
 from utils import log_message, print_colored
+import signal
+import sys
 
 class ChatServer:
     def __init__(self):
         self.clients = {}  # username -> Client object
         self.socket = None
         self.server_ip = get_local_ip()
+        self.running = True
+        self.port = CONFIG['SERVER_PORT']
+
+        # Setup signal handlers for graceful shutdown
+        signal.signal(signal.SIGINT, self.handle_shutdown)
+        signal.signal(signal.SIGTERM, self.handle_shutdown)
+
+    def handle_shutdown(self, signum, frame):
+        """Handle shutdown signals gracefully"""
+        print_colored("\nReceived shutdown signal. Closing server...", "yellow")
+        self.shutdown()
+        sys.exit(0)
 
     def start(self):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind(('0.0.0.0', CONFIG['SERVER_PORT']))
-        self.socket.listen(CONFIG['MAX_CONNECTIONS'])
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.socket.settimeout(CONFIG['SOCKET_TIMEOUT'])
 
-        print_colored("\n=== Chat Server Started ===", "green")
-        print_colored(f"Server IP: {self.server_ip}", "blue")
-        print_colored(f"Port: {CONFIG['SERVER_PORT']}", "blue")
-        print_colored("Share these details with clients to connect.", "yellow")
-        print_colored("Waiting for connections...\n", "yellow")
-
-        log_message("Server started successfully")
-
-        while True:
+            # Try to bind to default port, if fails, find an available port
             try:
-                conn, addr = self.socket.accept()
-                threading.Thread(target=self.handle_client_connection,
-                               args=(conn, addr)).start()
-            except Exception as e:
-                log_message(f"Error accepting connection: {e}", 'error')
+                self.socket.bind(('0.0.0.0', self.port))
+            except OSError:
+                print_colored(f"Default port {self.port} is in use, searching for available port...", "yellow")
+                available_port = find_available_port()
+                if available_port:
+                    self.port = available_port
+                    try:
+                        self.socket.bind(('0.0.0.0', self.port))
+                        print_colored(f"Successfully bound to port {self.port}", "green")
+                    except OSError as e:
+                        print_colored(f"Error binding to port {self.port}: {e}", "red")
+                        return
+                else:
+                    print_colored(f"No available ports found in range {CONFIG['PORT_RANGE_START']}-{CONFIG['PORT_RANGE_END']}", "red")
+                    return
+
+            self.socket.listen(CONFIG['MAX_CONNECTIONS'])
+
+            print_colored("\n=== Chat Server Started ===", "green")
+            print_colored(f"Server IP: {self.server_ip}", "blue")
+            print_colored(f"Port: {self.port}", "blue")
+            print_colored("Share these details with clients to connect.", "yellow")
+            print_colored("Press Ctrl+C to shutdown server.", "yellow")
+            print_colored("Waiting for connections...\n", "yellow")
+
+            log_message("Server started successfully")
+
+            while self.running:
+                try:
+                    conn, addr = self.socket.accept()
+                    threading.Thread(target=self.handle_client_connection,
+                                   args=(conn, addr)).start()
+                except socket.timeout:
+                    continue
+                except Exception as e:
+                    log_message(f"Error accepting connection: {e}", 'error')
+                    if not self.running:
+                        break
+
+        except Exception as e:
+            print_colored(f"Server error: {e}", "red")
+            log_message(f"Server error: {e}", 'error')
+        finally:
+            self.shutdown()
 
     def handle_client_connection(self, conn, addr):
         try:
+            # Set timeout for client connections
+            conn.settimeout(CONFIG['CLIENT_TIMEOUT'])
+
             username = conn.recv(CONFIG['BUFFER_SIZE']).decode()
 
             # Check if username already exists
@@ -67,21 +116,24 @@ class ChatServer:
                 conn.close()
 
     def handle_client_messages(self, client):
-        while True:
+        while self.running:
             try:
                 data = client.connection.recv(CONFIG['BUFFER_SIZE'])
                 if not data:
                     break
 
-                msg = Message.from_json(data.decode())
-                log_message(f"Message from {client.username}: {msg.content}")
+                try:
+                    msg = Message.from_json(data.decode())
+                    log_message(f"Message from {client.username}: {msg.content}")
 
-                if msg.type == 'command':
-                    self.handle_command(msg, client)
-                elif msg.type == 'dm':
-                    self.handle_private_message(msg)
-                else:
-                    self.broadcast_message(msg, exclude=client.username)
+                    if msg.type == 'command':
+                        self.handle_command(msg, client)
+                    elif msg.type == 'dm':
+                        self.handle_private_message(msg)
+                    else:
+                        self.broadcast_message(msg, exclude=client.username)
+                except Exception as e:
+                    log_message(f"Error processing message: {e}", 'error')
 
             except Exception as e:
                 log_message(f"Error handling message from {client.username}: {e}", 'error')
@@ -157,12 +209,31 @@ class ChatServer:
             )
 
     def shutdown(self):
+        """Shutdown the server and clean up connections"""
+        self.running = False
         print_colored("\nShutting down server...", "yellow")
-        for client in self.clients.values():
-            client.connection.close()
+
+        # Notify all clients about server shutdown
+        shutdown_msg = Message('status', 'Server is shutting down...', 'Server')
+        self.broadcast_message(shutdown_msg)
+
+        # Close all client connections
+        for client in list(self.clients.values()):
+            try:
+                client.connection.close()
+            except:
+                pass
+        self.clients.clear()
+
+        # Close server socket
         if self.socket:
-            self.socket.close()
+            try:
+                self.socket.close()
+            except:
+                pass
+
         print_colored("Server shutdown complete.", "green")
+        log_message("Server shutdown complete")
 
 if __name__ == "__main__":
     server = ChatServer()

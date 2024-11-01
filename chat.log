@@ -5,3 +5,90 @@
 2024-10-29 21:05:54,925 - INFO - Server started successfully
 2024-10-29 21:06:28,287 - INFO - Client connected: aditya from ('127.0.0.1', 51716)
 2024-10-29 21:06:32,391 - INFO - Client disconnected: aditya
+2024-10-30 09:57:29,040 - INFO - Server started successfully
+2024-10-30 09:57:50,880 - INFO - Client connected: aditya from ('127.0.0.1', 39504)
+2024-10-30 09:57:50,880 - INFO - Client disconnected: aditya
+2024-10-30 09:58:02,158 - INFO - Client connected: aditya from ('127.0.0.1', 44802)
+2024-10-30 09:58:02,160 - INFO - Client disconnected: aditya
+2024-10-30 09:58:12,245 - INFO - Client connected: aditya from ('127.0.0.1', 48418)
+2024-10-30 09:58:18,818 - INFO - Client connected: rishil from ('127.0.0.1', 48424)
+2024-10-30 09:58:34,093 - INFO - Message from rishil: aditya
+2024-10-30 09:58:34,093 - INFO - Client disconnected: rishil
+2024-10-30 09:59:58,324 - INFO - Server started successfully
+2024-10-30 10:00:19,632 - INFO - Client connected: rishil from ('127.0.0.1', 54792)
+2024-10-30 10:00:19,633 - INFO - Client disconnected: rishil
+2024-10-30 10:00:27,430 - INFO - Client connected: ad from ('127.0.0.1', 36498)
+2024-10-30 10:00:27,430 - INFO - Client disconnected: ad
+2024-10-30 10:08:59,211 - INFO - Server shutdown complete
+2024-10-30 10:09:02,948 - INFO - Server shutdown complete
+2024-10-30 10:10:15,353 - INFO - Server started successfully
+2024-10-30 10:10:25,998 - INFO - Client connected: aditya from ('127.0.0.1', 41542)
+2024-10-30 10:10:33,201 - INFO - Client connected: rishil from ('127.0.0.1', 51024)
+2024-10-30 10:10:45,890 - INFO - Client connected: santhosh from ('127.0.0.1', 55728)
+2024-10-30 10:10:48,105 - INFO - Message from santhosh: aditya
+2024-10-30 10:10:55,918 - INFO - Message from santhosh: hi i am santhosh
+2024-10-30 10:11:01,218 - INFO - Message from santhosh: hi i am santy
+2024-10-30 10:11:07,120 - INFO - Message from rishil: hi i am rishil
+2024-10-30 10:11:13,381 - INFO - Message from aditya: users
+2024-10-30 10:11:45,852 - INFO - Message from aditya: hi rishil secret message
+2024-10-30 10:13:58,364 - INFO - Client disconnected: aditya
+2024-10-30 10:14:01,929 - INFO - Client disconnected: rishil
+2024-10-30 10:14:04,319 - INFO - Client disconnected: santhosh
+2024-10-30 10:14:06,895 - INFO - Server shutdown complete
+2024-10-30 10:14:06,895 - INFO - Server shutdown complete
+2024-10-30 10:14:12,176 - INFO - Server started successfully
+2024-10-30 10:14:25,275 - INFO - Client connected: aditya from ('127.0.0.1', 54564)
+2024-10-30 10:14:25,276 - INFO - Client disconnected: aditya
+2024-10-30 10:16:00,253 - INFO - Server shutdown complete
+2024-10-30 10:16:00,253 - INFO - Server shutdown complete
+2024-10-30 10:16:10,978 - INFO - Server started successfully
+2024-10-30 10:16:22,063 - INFO - Client connected: rishil from ('127.0.0.1', 51280)
+2024-10-30 10:16:26,029 - INFO - Client connected: santhosh from ('127.0.0.1', 51288)
+2024-10-30 10:16:30,255 - INFO - Client connected: aditya from ('127.0.0.1', 40470)
+2024-10-30 10:16:34,684 - INFO - Message from rishil: hi i am rishil
+2024-10-30 10:16:38,509 - INFO - Message from santhosh: hi i am santy
+2024-10-30 10:16:46,346 - INFO - Message from aditya: hi i am aditya
+2024-10-30 10:16:53,748 - INFO - Message from rishil: ;klajsdf
+2024-10-30 10:16:55,762 - INFO - Message from santhosh: ;lkjas;df
+2024-10-30 10:16:57,179 - INFO - Message from aditya: ;lkja;sldkf
+2024-10-30 10:19:29,233 - INFO - Client disconnected: santhosh
+2024-10-30 10:19:31,936 - INFO - Client disconnected: aditya
+2024-10-30 10:19:35,246 - INFO - Client disconnected: rishil
+2024-10-30 10:19:37,828 - INFO - Server shutdown complete
+2024-10-30 10:19:37,828 - INFO - Server shutdown complete
+2024-10-30 10:19:41,465 - INFO - Server started successfully
+2024-10-30 10:19:54,477 - INFO - Client connected: adi from ('127.0.0.1', 48738)
+2024-10-30 10:20:04,524 - INFO - Client connected: santhosh from ('127.0.0.1', 49048)
+2024-10-30 10:20:09,496 - INFO - Client connected: rishil from ('127.0.0.1', 37848)
+2024-10-30 10:20:18,059 - INFO - Message from adi: hi guys i am aditya
+2024-10-30 10:20:24,287 - INFO - Message from santhosh: hi santy here
+2024-10-30 10:20:26,907 - INFO - Message from rishil: hi rishil here
+2024-10-30 10:20:37,840 - INFO - Message from adi: secret message to rishil from aditya
+2024-10-30 10:20:44,206 - INFO - Server shutdown complete
+2024-10-30 10:20:44,207 - INFO - Server shutdown complete
+2024-10-30 10:20:46,048 - INFO - Client disconnected: adi
+2024-10-30 10:20:50,201 - INFO - Client disconnected: santhosh
+2024-10-30 10:20:52,775 - INFO - Client disconnected: rishil
+2024-10-30 10:20:57,063 - INFO - Server started successfully
+2024-10-30 10:21:05,111 - INFO - Client connected: aditya from ('127.0.0.1', 51422)
+2024-10-30 10:21:07,360 - INFO - Client disconnected: aditya
+2024-10-30 10:21:10,611 - INFO - Server shutdown complete
+2024-10-30 10:21:10,612 - INFO - Server shutdown complete
+2024-10-30 10:21:17,302 - INFO - Server started successfully
+2024-10-30 10:21:21,544 - INFO - Client connected: aditya from ('127.0.0.1', 37714)
+2024-10-30 10:21:31,587 - INFO - Client disconnected: aditya
+2024-10-30 10:21:36,484 - INFO - Client connected: aditya from ('127.0.0.1', 52448)
+2024-10-30 10:21:43,552 - INFO - Client disconnected: aditya
+2024-10-30 10:21:49,338 - INFO - Server shutdown complete
+2024-10-30 10:21:49,338 - INFO - Server shutdown complete
+2024-10-30 10:35:21,342 - INFO - Server started successfully
+2024-10-30 10:35:39,584 - INFO - Client connected: aditya from ('127.0.0.1', 48054)
+2024-10-30 10:35:41,972 - INFO - Client connected: rishil from ('127.0.0.1', 48058)
+2024-10-30 10:35:45,176 - INFO - Client connected: santhosh from ('127.0.0.1', 48072)
+2024-10-30 10:35:54,585 - INFO - Message from aditya: users
+2024-10-30 10:36:09,284 - INFO - Message from aditya: hi i am aditya
+2024-10-30 10:36:15,164 - INFO - Message from santhosh: hi i am santhosh
+2024-10-30 10:36:20,996 - INFO - Message from aditya: secret
+2024-10-30 10:36:50,530 - INFO - Client disconnected: santhosh
+2024-10-30 18:37:53,042 - INFO - Client disconnected: rishil
+2024-10-30 18:37:54,055 - INFO - Client disconnected: aditya

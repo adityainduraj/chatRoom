@@ -114,12 +114,14 @@ class ChatClient:
                 if not data:
                     break
 
-                msg = Message.from_json(data.decode())
-                print('\r' + format_message(msg))
-
-                # Reprint the input prompt
-                if hasattr(self, 'current_input'):
-                    print(f"\r> {self.current_input}", end='')
+                try:
+                    msg = Message.from_json(data.decode())
+                    print('\r' + ' ' * (len(getattr(self, 'current_input', '')) + 2), end='\r')
+                    print(format_message(msg))
+                    if hasattr(self, 'current_input'):
+                        print(f"> {self.current_input}", end='', flush=True)
+                except Exception as e:
+                    print(f"\nError processing message: {e}")
 
             except Exception as e:
                 if self.running:
@@ -128,6 +130,7 @@ class ChatClient:
                 break
 
     def send_messages(self):
+        self.current_input = ''  # Initialize current_input
         while self.running:
             try:
                 self.current_input = input("> ")
@@ -141,6 +144,8 @@ class ChatClient:
                 else:
                     msg = Message('chat', message, self.username)
                     self.socket.send(msg.to_json().encode())
+
+                self.current_input = ''  # Reset current_input after sending
 
             except Exception as e:
                 if self.running:
