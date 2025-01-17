@@ -7,6 +7,10 @@ from models import Client, Message
 from utils import log_message, print_colored
 import signal
 import sys
+import openai
+
+# Set your OpenAI API key here
+openai.api_key = 'YOUR_OPENAI_API_KEY'
 
 class ChatServer:
     def __init__(self):
@@ -132,6 +136,12 @@ class ChatServer:
                         self.handle_private_message(msg)
                     else:
                         self.broadcast_message(msg, exclude=client.username)
+                        # Send message to chatbot and broadcast response
+                        chatbot_response = self.get_chatbot_response(msg.content)
+                        if chatbot_response:
+                            self.broadcast_message(
+                                Message('chat', chatbot_response, 'Chatbot')
+                            )
                 except Exception as e:
                     log_message(f"Error processing message: {e}", 'error')
 
@@ -140,6 +150,18 @@ class ChatServer:
                 break
 
         self.remove_client(client.username)
+
+    def get_chatbot_response(self, user_message):
+        try:
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=user_message,
+                max_tokens=150
+            )
+            return response.choices[0].text.strip()
+        except Exception as e:
+            log_message(f"Error getting chatbot response: {e}", 'error')
+            return None
 
     def broadcast_message(self, message, exclude=None):
         disconnected_clients = []
